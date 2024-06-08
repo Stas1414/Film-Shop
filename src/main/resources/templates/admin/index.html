@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Фильмы</title>
+</head>
+<body>
+<h1 style="text-align: center">Фильмы</h1>
+<div  th:each="film : ${films}">
+    <img th:src="${film.getPicture()}" alt="Невозможно загрузить картинку" >
+    <a  th:href="@{/admin/films/{id}(id=${film.getId()})}" th:text="${film.getName()}">Film</a>
+    <a  th:href="@{/admin/films/{id}(id=${film.getId()})}" th:text="${film.getAuthor()}">Author</a>
+    <a  th:href="@{/admin/films/{id}(id=${film.getId()})}" th:text="${film.getYearOfProduction}">YearOfProduction</a>
+</div>
+
+<br/>
+<br/>
+<form action="/admin/films/new">
+<button type="submit">Добавить фильм</button>
+</form>
+<br/>
+<form action="/admin/films/delete">
+<button type="submit"  action="/admin/films/delete">Удалить фильм</button>
+</form>
+<br/>
+<br/>
+</body>
+</html>

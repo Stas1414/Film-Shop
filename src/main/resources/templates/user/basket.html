@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+<div th:each="film : ${userBasket}">
+    <img th:src="${film.getPicture()}" alt="Невозможно загрузить картинку">
+    <p th:text="${film.getName()}">Название фильма</p>
+</div>
+
+<h3>Общая стоимость:</h3>
+<div th:text="${resultPrice}">Общая стоимость</div>
+
+<form id="payment-form" method="post" th:action="@{/create-payment-intent}">
+    <input type="hidden" name="price" th:value="${resultPrice}"/>
+    <div id="card-element">
+        <!-- Stripe Element будет вставлен сюда -->
+    </div>
+    <div id="card-errors" role="alert"></div>
+    <button type="submit">Оплатить</button>
+</form>
+
+<form method="get" th:action="@{/user/films/clearBasket}">
+    <button type="submit">Очистить корзину</button>
+</form>
+
+<form method="get" th:action="@{/user/films}">
+    <button type="submit">Вернуться на главную</button>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var stripe = Stripe('pk_test_51PMsrIP8HtHEO0CgCiyTUzO69rMJMyavDDtmw7a0VP1oQy5oVIf1hPROZWmvIkgKZtr5UmoddqvN27LbRiVpoQjT00LBEtFqaX');
+        var elements = stripe.elements();
+        var card = elements.create('card');
+        card.mount('#card-element');
+
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams(new FormData(form))
+            })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(paymentIntent) {
+                    if (paymentIntent.error) {
+                        throw new Error(paymentIntent.error);
+                    }
+                    return stripe.confirmCardPayment(paymentIntent.client_secret, {
+                        payment_method: {
+                            card: card,
+                            billing_details: {
+                                address: {
+                                    postal_code: '12345' // Добавляем индекс здесь
+                                }
+                            }
+                        }
+                    });
+                })
+                .then(function(result) {
+                    if (result.error) {
+                        var displayError = document.getElementById('card-errors');
+                        displayError.textContent = result.error.message;
+                    } else {
+                        if (result.paymentIntent.status === 'succeeded') {
+                            window.location.href = "/user/successful_payment";
+                        }
+                    }
+                })
+                .catch(function(error) {
+                    var displayError = document.getElementById('card-errors');
+                    displayError.textContent = error.message;
+                    console.error("Error:", error);
+                });
+        });
+    });
+</script>
+</body>
+</html>

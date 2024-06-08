@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <img th:src="${film.getPicture()}" alt="Невозможно загрузить картинку">
+    <div>Название фильма:</div>
+    <div th:text="${film.getName()}">Название фильма</div>
+    <div th:text="${film.getYearOfProduction()}">Год выпуска фильма</div>
+    <div th:text="${film.getAuthor()}">Режиссер</div>
+    <div th:text="${film.getDescription()}">Описание фильма</div>
+    <div th:text="${film.getPrice()}">Цена фильма</div>
+
+    <form method="post" action="/user/films/add-to-basket">
+        <input type="hidden" name="name" th:value="${film.getName()}"/>
+        <input type="hidden" name="price" th:value="${film.getPrice()}"/>
+        <button type="submit">Добавить в корзину</button>
+    </form>
+</body>
+</html>

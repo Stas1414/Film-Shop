@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:text="${user.getName()}">Имя</div>
+<div th:text="${user.getUsername()}">Логин</div>
+<h4>Фильмы в корзине пользователя</h4>
+<div th:each="film : ${user.getFilms()}">
+    <p th:text="${film.getName()}"></p>
+</div>
+
+<div th:if="${user.isLocked}">
+    <form method="post" action="/admin/unblock">
+        <input type="hidden" name="id" th:value="${user.getId()}">
+        <button type="submit">Разблокировать пользователя</button>
+    </form>
+</div>
+
+
+<div th:unless="${user.isLocked}">
+    <form method="post" action="/admin/block">
+        <input type="hidden" name="id" th:value="${user.getId()}">
+        <button type="submit">Заблокировать пользователя</button>
+    </form>
+</div>
+</body>
+</html>

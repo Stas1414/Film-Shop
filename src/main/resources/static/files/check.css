@@ -1,0 +1,16 @@
+button {
+    font-size: 33px;
+    width: 300px;
+    padding: 10px 6px 10px 6px;
+}
+.buttons-container{
+    position: absolute;
+    top: 50%;
+}
+.container {
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Удаление фильма</title>
+</head>
+<body>
+<form th:method="post" th:action="@{/admin/deleteFilm}">
+    <label for="film">Выберите фильм</label>
+    <select th:object="${film}" th:field="*{id}" id="film">
+        <option th:each="film : ${films}" th:value="${film.getId}" th:text="${film.getName()}"></option>
+    </select>
+
+    <input type="submit" value="Удалить фильм">
+</form>
+</body>
+</html>

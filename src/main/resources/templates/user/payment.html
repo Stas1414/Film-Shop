@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Оплата</title>
+</head>
+<body>
+<p>Общая стоимость:</p>
+<p th:text="${price}">Цена</p>
+<br/>
+<form method="post" th:action="@{/user/successful_payment}">
+    <label for="cart">Номер карты </label>
+    <input type="text" id="cart" name="cart" pattern="\d{16}" maxlength="16" minlength="16" required>
+    <label for="end_date">Срок действия карты</label>
+    <input type="text" id="end_date" name="end_date" pattern="^(0[1-9]|1[0-2])\/\d{2}$" required>
+    <button type="submit">Оплатить</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотр</title>
+</head>
+<body>
+<img th:src="${film.getPicture()}" alt="Невозможно загрузить картинку">
+<div>Название фильма:</div>
+<div th:text="${film.getName()}">Название фильма</div>
+<div th:text="${film.getYearOfProduction()}">Год выпуска фильма</div>
+<div th:text="${film.getAuthor()}">Режиссер</div>
+<div th:text="${film.getDescription()}">Описание фильма</div>
+<div th:text="${film.getPrice()}">Цена фильма</div>
+<form method="post" th:action="@{/admin/edit/{id}(id=${film.getId()})}">
+<!--    <input type="hidden" name="name" th:value="${film.getName()}">-->
+<!--    <input type="hidden" name="yearOfProduction" th:value="${film.getYearOfProduction()}">-->
+<!--    <input type="hidden" name="author" th:value="${film.getAuthor()}">-->
+<!--    <input type="hidden" name="description" th:value="${film.getDescription()}">-->
+<!--    <input type="hidden" name="price" th:value="${film.getPrice()}">-->
+    <button type="submit">Редактировать фильм</button>
+</form>
+</body>
+</html>

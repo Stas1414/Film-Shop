@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление фильма</title>
+</head>
+<body>
+
+<form method="post" action="/admin/new" th:object="${film}" enctype="multipart/form-data">
+    <label for="name">Введите название фильма</label>
+    <input type="text" th:field="*{name}" id="name" required>
+    <br/>
+    <label for="author">Введите режиссера</label>
+    <input type="text" th:field="*{author}" id="author" required>
+    <br/>
+    <label for="year_of_production">Введите год выпуска</label>
+    <input type="text" th:field="*{yearOfProduction}" id="year_of_production" pattern="\d{4}" maxlength="4" minlength="4" required>
+    <br/>
+    <label for="description">Описание к фильму</label>
+    <input type="text" th:field="*{description}" id="description" required>
+    <br/>
+    <label for="price">Цена</label>
+    <input type="text" th:field="*{price}" id="price" pattern="\d+" required>
+    <br/>
+    <label for="imageUpload">Загрузить изображение:</label>
+    <input type="file" id="imageUpload" name="imageUpload" accept="image/*" required>
+    <button type="submit">Добавить фильм</button>
+</form>
+
+</body>
+</html>

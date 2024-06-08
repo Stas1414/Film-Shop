@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование</title>
+</head>
+<body>
+<form method="post" th:action="@{/admin/films/edit/{id}(id=${film.getId()})}" th:object="${film}">
+<!--    <input type="hidden" name="id" th:value="${film.getId()}">-->
+    <label for="name">Введите название</label>
+    <input type="text" th:field="*{name}" id="name">
+    <br/>
+    <label for="yearOfProduction">Введите год выпуска</label>
+    <input type="text" th:field="*{yearOfProduction}" id="yearOfProduction">
+    <br/>
+    <label for="author">Введите режиссера</label>
+    <input type="text" th:field="*{author}" id="author">
+    <br/>
+    <label for="description">Введите описание</label>
+    <input type="text" th:field="*{description}" id="description">
+    <br/>
+    <label for="price">Введите цену</label>
+    <input type="text" th:field="*{price}" id="price">
+    <br/>
+    <button type="submit">Редактировать фильм</button>
+</form>
+
+</body>
+</html>
